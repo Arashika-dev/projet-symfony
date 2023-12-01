@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdvertisementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,6 +35,14 @@ class Advertisement
     #[ORM\ManyToOne(inversedBy: 'advertisements')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ModelMoto $moto = null;
+
+    #[ORM\OneToMany(mappedBy: 'advertisement', targetEntity: ImagesAdvert::class, orphanRemoval: true)]
+    private Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -108,6 +118,36 @@ class Advertisement
     public function setMoto(?ModelMoto $moto): static
     {
         $this->moto = $moto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ImagesAdvert>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(ImagesAdvert $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setAdvertisement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ImagesAdvert $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAdvertisement() === $this) {
+                $image->setAdvertisement(null);
+            }
+        }
 
         return $this;
     }
