@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -34,6 +36,16 @@ class User implements UserInterface
 
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $phone_number = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Advertisement::class, orphanRemoval: true)]
+    private Collection $advertisements;
+
+
+
+    public function __construct()
+    {
+        $this->advertisements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -149,4 +161,36 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Advertisement>
+     */
+    public function getAdvertisements(): Collection
+    {
+        return $this->advertisements;
+    }
+
+    public function addAdvertisement(Advertisement $advertisement): static
+    {
+        if (!$this->advertisements->contains($advertisement)) {
+            $this->advertisements->add($advertisement);
+            $advertisement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdvertisement(Advertisement $advertisement): static
+    {
+        if ($this->advertisements->removeElement($advertisement)) {
+            // set the owning side to null (unless already changed)
+            if ($advertisement->getUser() === $this) {
+                $advertisement->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }
