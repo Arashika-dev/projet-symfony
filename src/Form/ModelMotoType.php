@@ -21,10 +21,12 @@ class ModelMotoType extends AbstractType
             ->add('category', EntityType::class, [
                 'class' => CategoryMoto::class,
                 'choice_label' => 'name',
+                'attr' => ['class' => 'col-6']
             ])
             ->add('brand', EntityType::class, [
                 'class' => Brand::class,
                 'choice_label' => 'name',
+                'attr' => ['class' => 'col-6']
             ])
         ;
     }

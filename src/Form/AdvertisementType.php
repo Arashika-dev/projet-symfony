@@ -20,6 +20,7 @@ class AdvertisementType extends AbstractType
             ->add('description')
             ->add('moto', ModelMotoType::class, [
                 'mapped' => false, 
+                'label' => false,
             ])
         ;
     }
