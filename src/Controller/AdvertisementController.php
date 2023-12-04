@@ -33,8 +33,11 @@ class AdvertisementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $modelMoto = $form->get('moto')->getData();
+
             $advertisement->setCreadtedAt(new \DateTime());
             $advertisement->setUser($user);
+            $advertisement->setMoto($modelMoto);
             $entityManager->persist($advertisement);
             $entityManager->flush();
 

@@ -24,9 +24,15 @@
   <div class="container-fluid">
     <div class="col-lg-2 offset-lg-10 py-1 text-end">
     {% if app.user %}
-      <a href="{{path('app_logout')}}" class="btn btn-outline-danger">Déconnexion</a>
+      <div class="d-flex flex-row justify-content-end">
+        <a href="" class="me-3 my-auto link-underline-light link-dark">{{ app.user.userIdentifier }}</a>
+        <a href="{{path('app_logout')}}" class="btn btn-outline-danger">Déconnexion</a>
+      </div>
     {% else %}
-      <a href="{{path('app_login')}}" class="btn btn-outline-dark">Connexion</a>
+      <div class="d-flex flex-row justify-content-end">
+        <a href="" class="btn btn-outline-success me-3">Inscription</a>
+        <a href="{{path('app_login')}}" class="btn btn-outline-dark">Connexion</a>
+      </div>
     {% endif %}
     </div>
   </div>
