@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Advertisement;
 use App\Entity\Brand;
+use App\Entity\CategoryMoto;
 use App\Entity\ImagesAdvert;
 use App\Entity\ModelMoto;
 use App\Entity\User;
@@ -57,6 +58,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Motos');
         yield MenuItem::linkToCrud('Marques', 'fas fa-list', Brand::class);
+        yield MenuItem::linkToCrud('Categories', 'fas fa-list', CategoryMoto::class);
         yield MenuItem::linkToCrud('Modeles', 'fas fa-list', ModelMoto::class);
 
     }
