@@ -28,11 +28,11 @@ class Advertisement
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'advertisements')]
+    #[ORM\ManyToOne(inversedBy: 'advertisements', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'advertisements')]
+    #[ORM\ManyToOne(inversedBy: 'advertisements', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?ModelMoto $moto = null;
 

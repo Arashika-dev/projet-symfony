@@ -7,8 +7,7 @@ J'ai commencé par créer toutes mes entités avec leur relation pour créer ma 
 
 ## Advertisement Form
 
-J'ai créer un CRUD automatique sur l'entité Advertisement, le form généré par symfony m'a donné une liste déroulante pour le modèle moto mais je souhaiterai que l'utilisateur puisse saisir lui même le modèle. J'ai donc intégrer le ModelMotoType dans l'AdvertisementType pour obtenir les champs de données mais en utilisant le parametre 'mapped' -> false. Il faut donc modifier le controller pour y gérer les relations des formulaires manuellement. 
-
+J'ai créer un CRUD automatique sur l'entité Advertisement, le form généré par symfony m'a donné une liste déroulante pour le modèle moto mais je souhaiterai que l'utilisateur puisse saisir lui même le modèle. J'ai donc intégrer le ModelMotoType dans l'AdvertisementType pour obtenir les champs de données en ajoutant cascade: persist sur les propriété de relation entre entités.
 ### Upload d'images
 
 
