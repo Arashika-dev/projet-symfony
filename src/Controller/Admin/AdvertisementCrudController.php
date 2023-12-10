@@ -26,10 +26,10 @@ class AdvertisementCrudController extends AbstractCrudController
             TextField::new('title'),
             TextEditorField::new('description'),
             MoneyField::new('price')->setCurrency('EUR'),
-            DateTimeField::new('creadtedAt'),
-            AssociationField::new('user'),
-            AssociationField::new('moto'),
-            CollectionField::new('images'),
+            DateTimeField::new('creadtedAt')->onlyOnIndex(),
+            AssociationField::new('user')->onlyOnIndex(),
+            AssociationField::new('moto')->renderAsEmbeddedForm(ModelMotoCrudController::class),
+            CollectionField::new('images')->useEntryCrudForm(),
         ];
     }
     

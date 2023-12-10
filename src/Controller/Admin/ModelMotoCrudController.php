@@ -2,12 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Brand;
 use App\Entity\ModelMoto;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ModelMotoCrudController extends AbstractCrudController
@@ -25,8 +24,7 @@ class ModelMotoCrudController extends AbstractCrudController
             IntegerField::new('year'),
             IntegerField::new('Engine'),
             AssociationField::new('brand')->autocomplete(),
-            AssociationField::new('category')->autocomplete()
-        ];
+            AssociationField::new('category')->autocomplete(),
+            ];
     }
-    
 }

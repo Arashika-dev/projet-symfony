@@ -8,6 +8,7 @@
 /var/
 /vendor/
 /public/uploads/adverts
+/public/uploads/profile
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

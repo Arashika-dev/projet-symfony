@@ -7,7 +7,7 @@ J'ai commencé par créer toutes mes entités avec leur relation pour créer ma 
 
 ## Advertisement Form
 
-J'ai créer un CRUD automatique sur l'entité Advertisement, le form généré par symfony m'a donné une liste déroulante pour le modèle moto mais je souhaiterai que l'utilisateur puisse saisir lui même le modèle. J'ai donc intégrer le ModelMotoType dans l'AdvertisementType pour obtenir les champs de données en ajoutant cascade: persist sur les propriété de relation entre entités.
+J'ai créer un CRUD automatique sur l'entité Advertisement, le formulaire généré par symfony m'a donné une liste déroulante pour le modèle moto mais je souhaiterai que l'utilisateur puisse saisir lui même le modèle. J'ai donc intégrer le ModelMotoType dans l'AdvertisementType pour obtenir les champs de données en ajoutant cascade: persist sur les propriété de relation entre entités.
 ### Upload d'images
 
 
@@ -20,3 +20,6 @@ Les boutons Connexion/Déconnexion varient en fonction de 'app.user' et renvoien
 
 ### Event hashpassword
 Un event subscriber permet de hasher le mot de passe lors de l'inscription dans la BDD.
+
+### Gestion User dans EasyAdmin
+J'ai souhaité que lors de la création d'un utilisateur dans EasyAdmin, l'administrateur puisse choisir le rôle de ce nouvel utilisateur. J'ai donc utilisé ChoiceField, le fait que "roles" soit un array m'as contraint à utiliser ->allowMultipleChoices(), ce qui n'est pas plus mal, car on pourra a l'avenir affecter plusieurs roles a un même utilisateur.

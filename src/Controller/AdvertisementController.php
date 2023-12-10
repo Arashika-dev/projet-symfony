@@ -27,17 +27,14 @@ class AdvertisementController extends AbstractController
     #[Route('/new', name: 'app_advertisement_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
-        $user = $security->getUser();
         $advertisement = new Advertisement();
         $form = $this->createForm(AdvertisementType::class, $advertisement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $modelMoto = $form->get('moto')->getData();
-
-            $advertisement->setCreadtedAt(new \DateTime());
-            $advertisement->setUser($user);
             $advertisement->setMoto($modelMoto);
+            
             $entityManager->persist($advertisement);
             $entityManager->flush();
 
