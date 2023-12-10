@@ -23,7 +23,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('pseudo'),
             TextField::new('firstname'),
             TextField::new('lastname'),
-            TextField::new('password'),
+            TextField::new('password')->onlyOnForms(),
             TextField::new('phone_number'),
             ChoiceField::new('roles')->allowMultipleChoices()
             ->renderExpanded()
