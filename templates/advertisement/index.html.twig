@@ -3,39 +3,33 @@
 {% block title %}Advertisement index{% endblock %}
 
 {% block body %}
-    <h1>Advertisement index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>CreadtedAt</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h1 class="text-center">Moto à vendre</h1>
+    <div class="row">
         {% for advertisement in advertisements %}
-            <tr>
-                <td>{{ advertisement.id }}</td>
-                <td>{{ advertisement.title }}</td>
-                <td>{{ advertisement.price }}</td>
-                <td>{{ advertisement.creadtedAt ? advertisement.creadtedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ advertisement.description }}</td>
-                <td>
-                    <a href="{{ path('app_advertisement_show', {'id': advertisement.id}) }}">show</a>
-                    <a href="{{ path('app_advertisement_edit', {'id': advertisement.id}) }}">edit</a>
-                </td>
-            </tr>
+            
+            <div class="col-lg-3 col-md-4">
+                <div class="border mb-2">
+                    {% if advertisement.getImages()|length > 0 %}
+                        {% set firstImage = advertisement.getImages()|first %}
+                        <img class="img-fluid" src="/uploads/adverts/{{ firstImage.getPath() }}" alt="Image en avant de l'annonce {{advertisement.title}}">
+                    {% endif %}
+                    <div class="py-1">
+                        <h2 class="text-start">{{ advertisement.title }}</h2>
+                        <div class="d-flex justify-content-between">
+                            <span class="">Publié le {{ advertisement.creadtedAt ? advertisement.creadtedAt|date('Y-m-d') : '' }}</span>
+                            <span class="">{{ advertisement.price }} €</span>
+                        </div>
+                        <div class="w-100">
+                            <a href="{{ path('app_advertisement_show', {'id': advertisement.id}) }}" class="btn btn-outline-dark">En détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
+                <div>no records found</div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('app_advertisement_new') }}">Create new</a>
+    
+    
 {% endblock %}

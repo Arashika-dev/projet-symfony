@@ -5,9 +5,14 @@
 
 J'ai commencé par créer toutes mes entités avec leur relation pour créer ma base de donnée. 
 
-## Advertisement Form
+## Advertisement
 
+### Index
+J'ai ajouter le bouton permettant d'acceder a l'ajout d'une annonce, uniquement si on est connecté.
+
+### Form new
 J'ai créer un CRUD automatique sur l'entité Advertisement, le formulaire généré par symfony m'a donné une liste déroulante pour le modèle moto mais je souhaiterai que l'utilisateur puisse saisir lui même le modèle. J'ai donc intégrer le ModelMotoType dans l'AdvertisementType pour obtenir les champs de données en ajoutant cascade: persist sur les propriété de relation entre entités.
+
 ### Upload d'images
 
 
