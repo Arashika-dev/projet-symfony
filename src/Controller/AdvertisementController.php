@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Advertisement;
+use App\Entity\ImagesAdvert;
 use App\Entity\User;
 use App\Form\AdvertisementType;
 use App\Repository\AdvertisementRepository;
+
+use App\UploadFiles\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -16,6 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/advertisement')]
 class AdvertisementController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ){
+
+    }
+
     #[Route('/', name: 'app_advertisement_index', methods: ['GET'])]
     public function index(AdvertisementRepository $advertisementRepository): Response
     {
@@ -25,7 +34,7 @@ class AdvertisementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_advertisement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         $advertisement = new Advertisement();
         $form = $this->createForm(AdvertisementType::class, $advertisement);
@@ -34,9 +43,20 @@ class AdvertisementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $modelMoto = $form->get('moto')->getData();
             $advertisement->setMoto($modelMoto);
-            
-            $entityManager->persist($advertisement);
-            $entityManager->flush();
+            $advertImages = $form->get('image')->getData();
+            if($advertImages){
+                $advertImageNames = [];
+                foreach($advertImages as $advertImage)
+                {
+                    $advertImageNames[] = $fileUploader->upload($advertImage, FileUploader::ADVERT_PATH);
+                }
+                foreach($advertImageNames as $name)
+                {
+                    $advertisement->addImage($name);
+                }
+            }
+            $this->entityManager->persist($advertisement);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_advertisement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -56,13 +76,13 @@ class AdvertisementController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_advertisement_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Advertisement $advertisement, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Advertisement $advertisement): Response
     {
         $form = $this->createForm(AdvertisementType::class, $advertisement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_advertisement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -74,11 +94,11 @@ class AdvertisementController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_advertisement_delete', methods: ['POST'])]
-    public function delete(Request $request, Advertisement $advertisement, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Advertisement $advertisement): Response
     {
         if ($this->isCsrfTokenValid('delete'.$advertisement->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($advertisement);
-            $entityManager->flush();
+            $this->entityManager->remove($advertisement);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('app_advertisement_index', [], Response::HTTP_SEE_OTHER);
