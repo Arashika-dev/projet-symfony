@@ -22,7 +22,7 @@ class ImagesAdvertCrudController extends AbstractCrudController
                 ->setBasePath('/uploads/adverts/')
                 ->setUploadDir('public/uploads/adverts')
                 ->setUploadedFileNamePattern('[randomhash].[extension]'),
-            AssociationField::new('advertisement')
+            AssociationField::new('advertisement')->onlyOnIndex()
         ];
     }
     

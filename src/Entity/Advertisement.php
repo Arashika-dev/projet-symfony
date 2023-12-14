@@ -36,7 +36,7 @@ class Advertisement
     #[ORM\JoinColumn(nullable: false)]
     private ?ModelMoto $moto = null;
 
-    #[ORM\OneToMany(mappedBy: 'advertisement', targetEntity: ImagesAdvert::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'advertisement', targetEntity: ImagesAdvert::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $images;
 
     public function __construct()

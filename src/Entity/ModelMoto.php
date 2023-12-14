@@ -29,7 +29,7 @@ class ModelMoto
     #[ORM\JoinColumn(nullable: false)]
     private ?Brand $brand = null;
 
-    #[ORM\OneToMany(mappedBy: 'moto', targetEntity: Advertisement::class)]
+    #[ORM\OneToMany(mappedBy: 'moto', targetEntity: Advertisement::class, cascade:['remove'])]
     private Collection $advertisements;
 
     #[ORM\Column]

@@ -14,7 +14,7 @@ J'ai ajouter le bouton permettant d'acceder a l'ajout d'une annonce, uniquement 
 J'ai créer un CRUD automatique sur l'entité Advertisement, le formulaire généré par symfony m'a donné une liste déroulante pour le modèle moto mais je souhaiterai que l'utilisateur puisse saisir lui même le modèle. J'ai donc intégrer le ModelMotoType dans l'AdvertisementType pour obtenir les champs de données en ajoutant cascade: persist sur les propriété de relation entre entités.
 
 ### Upload d'images
-
+Voilà une partie qui m'a causé pas mal de soucis, j'ai d'abord créer un service qui s'occupe de gérer l'upload de fichier car je pourrais en avoir besoin pour les profils utilisateurs. L'argument 'multiple' m'as poser problème car le formulaire me retournait un message d'erreur: il veut une string ?!. J'ai donc trouver la solution d'englober mon new File avec un new All, apparemment ça permettrait de prendre en compte toutes les contraintes.
 
 ## User/Authentification
 

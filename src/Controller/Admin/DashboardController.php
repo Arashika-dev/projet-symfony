@@ -60,5 +60,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', CategoryMoto::class);
         yield MenuItem::linkToCrud('Modeles', 'fas fa-list', ModelMoto::class);
 
+        yield MenuItem::section('Exit');
+        yield MenuItem::linkToLogout('Déconnexion',);
+        yield MenuItem::linkToUrl('Retour Accueil', null, '/');
     }
 }
