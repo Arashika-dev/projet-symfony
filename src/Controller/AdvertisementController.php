@@ -44,16 +44,11 @@ class AdvertisementController extends AbstractController
             $modelMoto = $form->get('moto')->getData();
             $advertisement->setMoto($modelMoto);
             $advertImages = $form->get('image')->getData();
-            if($advertImages){
-                $advertImageNames = [];
-                foreach($advertImages as $advertImage)
-                {
-                    $advertImageNames[] = $fileUploader->upload($advertImage, FileUploader::ADVERT_PATH);
-                }
-                foreach($advertImageNames as $name)
-                {
-                    $advertisement->addImage($name);
-                }
+            foreach ($advertImages as $advertImage) {
+                $fileName = $fileUploader->upload($advertImage, FileUploader::ADVERT_PATH);
+                $imageEntity = new ImagesAdvert();
+                $imageEntity->setPath($fileName);
+                $advertisement->addImage($imageEntity);
             }
             $this->entityManager->persist($advertisement);
             $this->entityManager->flush();
