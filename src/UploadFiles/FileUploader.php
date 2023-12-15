@@ -7,14 +7,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
 {
-    public const ADVERT_PATH =  "/uploads/adverts/";
-    public const PROFILE_PATH =  "/uploads/profile/";
+    public const ADVERT_PATH =  "uploads/adverts/";
+    public const PROFILE_PATH =  "uploads/profile/";
     public function __construct(
         private SluggerInterface $slugger,
+
     ) {
     }
 
-    public function upload(UploadedFile $file, string $targetDirectory,): string
+    public function upload(UploadedFile $file, string $targetDirectory): string
     {
         
         $fileName = uniqid().'.'.$file->guessExtension();
@@ -22,7 +23,7 @@ class FileUploader
         try {
             $file->move($targetDirectory, $fileName);
         } catch (FileException $e) {
-            
+
         }
 
         return $fileName;

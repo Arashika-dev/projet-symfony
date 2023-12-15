@@ -41,7 +41,7 @@ public function new(Request $request, FileUploader $fileUploader): Response
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        // Upload additional images
+        
         $advertImages = $form->get('images')->getData();
         foreach ($advertImages as $advertImage) {
             
