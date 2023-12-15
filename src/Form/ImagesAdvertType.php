@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ImagesAdvertType extends AbstractType
 {
@@ -22,9 +23,8 @@ class ImagesAdvertType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new All([
-                        new File([
+                        new Image([
                              'maxSize' => '1024K',
-                             
                              'mimeTypesMessage' => "Merci d'uploader un fichier image valable"
                         ]) 
                     ])

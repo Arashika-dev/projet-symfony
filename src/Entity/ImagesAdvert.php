@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ImagesAdvertRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImagesAdvertRepository::class)]
@@ -18,8 +17,10 @@ class ImagesAdvert
     #[ORM\JoinColumn(nullable: false)]
     private ?Advertisement $advertisement = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $path = [];
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
+
+    
 
     public function getId(): ?int
     {
@@ -38,15 +39,17 @@ class ImagesAdvert
         return $this;
     }
 
-    public function getPath(): array
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
     public function setPath(string $path): static
     {
-        $this->path = [$path];
+        $this->path = $path;
 
         return $this;
     }
+
+   
 }

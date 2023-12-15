@@ -3,6 +3,6 @@
     {{ form_row(form.price) }}
     {{ form_row(form.description) }}
     {{ form_row(form.moto) }}
-    {{ form_row(form.image, {'attr': {'multiple': 'multiple'}}) }}
+    {{ form_row(form.images, {'attr': {'multiple': 'multiple'}}) }}
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

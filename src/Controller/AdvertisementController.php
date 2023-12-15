@@ -34,33 +34,34 @@ class AdvertisementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_advertisement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, FileUploader $fileUploader): Response
-    {
-        $advertisement = new Advertisement();
-        $form = $this->createForm(AdvertisementType::class, $advertisement);
-        $form->handleRequest($request);
+public function new(Request $request, FileUploader $fileUploader): Response
+{
+    $advertisement = new Advertisement();
+    $form = $this->createForm(AdvertisementType::class, $advertisement);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $modelMoto = $form->get('moto')->getData();
-            $advertisement->setMoto($modelMoto);
-            $advertImages = $form->get('image')->getData();
-            foreach ($advertImages as $advertImage) {
-                $fileName = $fileUploader->upload($advertImage, FileUploader::ADVERT_PATH);
-                $imageEntity = new ImagesAdvert();
-                $imageEntity->setPath($fileName);
-                $advertisement->addImage($imageEntity);
-            }
-            $this->entityManager->persist($advertisement);
-            $this->entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Upload additional images
+        $advertImages = $form->get('images')->getData();
+        foreach ($advertImages as $advertImage) {
+            
+            $fileName = $fileUploader->upload($advertImage, FileUploader::ADVERT_PATH);
 
-            return $this->redirectToRoute('app_advertisement_index', [], Response::HTTP_SEE_OTHER);
+            $imageEntity = new ImagesAdvert();
+            $imageEntity->setPath($fileName);
+            $advertisement->addImage($imageEntity);
         }
 
-        return $this->render('advertisement/new.html.twig', [
-            'advertisement' => $advertisement,
-            'form' => $form,
-        ]);
+        $this->entityManager->persist($advertisement);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('app_advertisement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->render('advertisement/new.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
 
     #[Route('/{id}', name: 'app_advertisement_show', methods: ['GET'])]
     public function show(Advertisement $advertisement): Response
