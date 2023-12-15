@@ -3,24 +3,26 @@
 {% block title %}Advertisement index{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">Moto à vendre</h1>
+    <h1 class="text-center">Motos à vendre</h1>
+    <div class="container bg-tertiary-bg">
     <div class="row">
         {% for advertisement in advertisements %}
             
-            <div class="col-lg-3 col-md-4">
-                <div class="border mb-2">
+            <div class="col-lg-3 col-md-4 mb-2">
+                <div class="border h-100 d-flex justify-content-between flex-column">
                     {% if advertisement.getImages()|length > 0 %}
                         {% set firstImage = advertisement.getImages()|first %}
                         <img class="img-fluid" src="/uploads/adverts/{{ firstImage.getPath() }}" alt="Image en avant de l'annonce {{advertisement.title}}">
                     {% endif %}
-                    <div class="py-1">
+                    <div class="p-2 d-flex justify-content-between flex-column">
                         <h2 class="text-start">{{ advertisement.title }}</h2>
                         <div class="d-flex justify-content-between">
-                            <span class="">Publié le {{ advertisement.creadtedAt ? advertisement.creadtedAt|date('Y-m-d') : '' }}</span>
-                            <span class="">{{ advertisement.price }} €</span>
+                            <span class="">Publié le {{ advertisement.creadtedAt ? advertisement.creadtedAt|date('d/m/Y') : '' }}</span>
+                            
                         </div>
-                        <div class="w-100">
-                            <a href="{{ path('app_advertisement_show', {'id': advertisement.id}) }}" class="btn btn-outline-dark">En détails</a>
+                        <div class="w-100 d-flex justify-content-between align-items-end">
+                            <span class="">{{ advertisement.price }} €</span>
+                            <a href="{{ path('app_advertisement_show', {'id': advertisement.id}) }}" class="btn btn-outline-success">En détails</a>
                         </div>
                     </div>
                 </div>
@@ -28,6 +30,7 @@
         {% else %}
                 <div>no records found</div>
         {% endfor %}
+    </div>
     </div>
 
     
