@@ -17,6 +17,33 @@ J'ai créer un CRUD automatique sur l'entité Advertisement, le formulaire gén�
 Voilà une partie qui m'a causé pas mal de soucis, j'ai d'abord créer un service qui s'occupe de gérer l'upload de fichier car je pourrais en avoir besoin pour les profils utilisateurs. L'argument 'multiple' m'as poser problème car le formulaire me retournait un message d'erreur: il veut une string ?!. J'ai donc trouver la solution d'englober mon new File avec un new All, apparemment ça permettrait de prendre en compte toutes les contraintes une par une.
 Ensuite le fichier s'inscrivait bien dans la BDD mais pas d'uploads, que j'ai réussi a corrigé en enlevant un '/' au début du chemin ... J'ai aussi repasser le formulaire directement dans AdvertType plutôt que d'appeler ImageAdvertsType dans AdvertType, cela avait l'air de créer des conflits.
 
+```php
+public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('title')
+            ->add('price')
+            ->add('description')
+            ->add('moto', ModelMotoType::class, [
+                'label' => false,
+            ])
+            ->add('images', FileType::class, [
+                'mapped' => false,
+                'multiple' => true,
+                'required' => false,
+                'constraints' => [
+                    new All([
+                        new Image([
+                             'maxSize' => '1024K',
+                             'mimeTypesMessage' => "Merci d'uploader un fichier image valable"
+                        ]) 
+                    ])
+                ]   
+            ])
+        ;
+    }
+```
+
 ## User/Authentification
 
 J'ai créer l'entité utilisateur a l'aide de make:user et le système d'authentification grâce à make:auth.
@@ -35,9 +62,7 @@ Pour cette partie il fallu que je plonge dans la doc d'EasyAdmin pour être sur 
 
 ### Remove
 Pour pouvoir supprimer un model moto, par exemple, cela me renvoyait une erreur. J'ai donc ajouter un cascade remove sur les categories, mais le résultat ne me satisfait pas pleinement, car si je supprime le modèle, je supprime la catégorie également...
-```
-    
+```php
 #[ORM\OneToMany(mappedBy: 'category', targetEntity: ModelMoto::class, cascade: ["remove"])]
     private Collection $modelMotos;
-    
 ```

@@ -44,7 +44,7 @@
       <div class="col-lg-2 py-1 text-end">
       {% if app.user %}
         <div class="d-flex flex-row justify-content-end">
-          <a href="" class="me-3 my-auto link-underline-light link-dark">{{ app.user.userIdentifier }}</a>
+          <a href="{{path('app_user_show' , {'id' : app.user.id})}}" class="me-3 my-auto link-underline-light link-dark">{{ app.user.userIdentifier }}</a>
           <a href="{{path('app_logout')}}" class="btn btn-outline-danger">Déconnexion</a>
         </div>
       {% else %}
