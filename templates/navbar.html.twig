@@ -34,8 +34,11 @@
     <div class="row">
       <div class="col-lg-2">
       {% if app.request.attributes.get('_route') == 'app_advertisement_index' %} 
-            <a href="{{path('app_advertisement_new')}}" class="btn btn-outline-dark">Poster une annonce</a>
-        {% endif %}
+        <a href="{{path('app_advertisement_new')}}" class="btn btn-outline-dark">Poster une annonce</a>
+      {% endif %}
+      {% if app.request.attributes.get('_route') == 'app_advertisement_show' %}
+        <a href="{{ path('app_advertisement_index') }}" class="btn btn-outline-dark">Retour</a>
+      {% endif %}
       </div>
       <div class="col-lg-8"></div>
       <div class="col-lg-2 py-1 text-end">

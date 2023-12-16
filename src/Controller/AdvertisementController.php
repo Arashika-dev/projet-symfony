@@ -51,9 +51,9 @@ public function new(Request $request, FileUploader $fileUploader): Response
             $imageEntity->setPath($fileName);
             $advertisement->addImage($imageEntity);
         }
-
         $this->entityManager->persist($advertisement);
         $this->entityManager->flush();
+
 
         return $this->redirectToRoute('app_advertisement_index', [], Response::HTTP_SEE_OTHER);
     }
