@@ -60,6 +60,9 @@ J'ai souhaité que lors de la création d'un utilisateur dans EasyAdmin, l'admin
 ### Voter
 J'ai mis en place un voter pour que quiconque autre que l'administrateur ou l'utilisateur lui même puisse modifier, voir ou supprimer un profil. Cela déclenche une erreur 403 et throw un AccessDeniedException, je n'ai juste pas vraiment saisi comment choisir la page sur laquelle je veux rediriger, j'ai essayer un redirectToRoute mais visiblement l'exception est plus "forte". Il semblerait qu''il y est un moyen de faire une page personnalisé mais j'ai estimé que ce n'était pas le plus important et que j'allais perdre du temps...
 
+### Edition
+En travaillant sur l'édition d'un user, j'en suis venu a créer une fonction privée pour l'upload de l'image, je me suis alors demandé si je n'aurais pas dû créer un event pour ces uploads, en faisant appel au service que j'avais créer. Car cet evenements pourrait être utile pour les annonces comme pour les profils. Il faudrait aussi que je fasse en sorte de supprimer l'ancienne photo, mais je manque de temps.
+
 ## EasyAdmin
 Pour cette partie il fallu que je plonge dans la doc d'EasyAdmin pour être sur de choisir les bon Fields, aussi pour personnaliser les menus histoire d'y trouver un retour au site "normal" ou de se logout facilement. 
 
@@ -70,3 +73,7 @@ Pour pouvoir supprimer un model moto, par exemple, cela me renvoyait une erreur.
     private Collection $modelMotos;
 ```
 
+## Conclusion
+
+J'ai un peu couru après le temps sur ce projet parce que je me suis cassé les dents sur l'upload multiple mais j'ai finalement réussi. Je vois encore une floppée d'améliorations possibles, comme les quelques une énoncées plus haut. Ou encore un moteur de recherche, des filtres sur les annonces, un meilleur design (même si on est en back) ... 
+Symfony offre tellement de possibilités qu'on s'y perdrait...
