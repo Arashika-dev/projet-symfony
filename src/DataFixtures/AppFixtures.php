@@ -76,7 +76,7 @@ class AppFixtures extends Fixture
                 ->setFirstname($faker->firstName())
                 ->setLastname($faker->lastName())
                 ->setPhoneNumber($faker->phoneNumber())
-                ->setProfilePicture('default')
+                ->setProfilePicture('default.png')
                 ->setPseudo($faker->realTextBetween(5,15));
     
             $manager->persist($regularUser);
@@ -90,12 +90,10 @@ class AppFixtures extends Fixture
             ->setFirstname($faker->firstName())
             ->setLastname($faker->lastName())
             ->setPhoneNumber($faker->phoneNumber())
-            ->setProfilePicture('default')
+            ->setProfilePicture('default.png')
             ->setPseudo($faker->realTextBetween(5,15));
 
         $manager->persist($adminUser);
-        
-        // $users = [$regularUser, $adminUser];
         
 
         for ($i = 0; $i < count(self::CATEGORIES); $i++)

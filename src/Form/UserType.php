@@ -4,22 +4,35 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('roles')
-            ->add('password')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('pseudo')
-            ->add('profile_picture')
-            ->add('phone_number')
+            ->add('email', TextType::class)
+            ->add('password', PasswordType::class)
+            ->add('firstname', TextType::class)
+            ->add('lastname', TextType::class)
+            ->add('pseudo' ,TextType::class)
+            ->add('profile_picture', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                        new Image([
+                             'maxSize' => '1024K',
+                             'mimeTypesMessage' => "Merci d'uploader un fichier image valable"
+                        ]) 
+                ]   
+            ])
+            ->add('phone_number', TextType::class)
         ;
     }
 

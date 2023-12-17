@@ -57,6 +57,9 @@ Un event subscriber permet de hasher le mot de passe lors de l'inscription dans 
 ### Gestion User dans EasyAdmin
 J'ai souhaité que lors de la création d'un utilisateur dans EasyAdmin, l'administrateur puisse choisir le rôle de ce nouvel utilisateur. J'ai donc utilisé ChoiceField, le fait que "roles" soit un array m'as contraint à utiliser ->allowMultipleChoices(), ce qui n'est pas plus mal, car on pourra a l'avenir affecter plusieurs roles a un même utilisateur.
 
+### Voter
+J'ai mis en place un voter pour que quiconque autre que l'administrateur ou l'utilisateur lui même puisse modifier, voir ou supprimer un profil. Cela déclenche une erreur 403 et throw un AccessDeniedException, je n'ai juste pas vraiment saisi comment choisir la page sur laquelle je veux rediriger, j'ai essayer un redirectToRoute mais visiblement l'exception est plus "forte". Il semblerait qu''il y est un moyen de faire une page personnalisé mais j'ai estimé que ce n'était pas le plus important et que j'allais perdre du temps...
+
 ## EasyAdmin
 Pour cette partie il fallu que je plonge dans la doc d'EasyAdmin pour être sur de choisir les bon Fields, aussi pour personnaliser les menus histoire d'y trouver un retour au site "normal" ou de se logout facilement. 
 
@@ -66,3 +69,4 @@ Pour pouvoir supprimer un model moto, par exemple, cela me renvoyait une erreur.
 #[ORM\OneToMany(mappedBy: 'category', targetEntity: ModelMoto::class, cascade: ["remove"])]
     private Collection $modelMotos;
 ```
+
